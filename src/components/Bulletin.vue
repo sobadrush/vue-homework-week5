@@ -2,6 +2,41 @@
   <div>
     <h1 style="color: blue;">Bulletin.vue</h1>
     
+    <div style="border: 1px solid darkblue; padding: 1rem;">
+      <label>公告標題：</label>
+      <input type="text"/>
+
+      <br/>
+
+      <label>公告種類：</label>
+      <select>
+        <option value="0"></option>
+        <option value="1">最新公告</option>
+        <option value="2">FAQ</option>
+        <option value="3">操作手冊</option>
+      </select>
+
+      <br/>
+
+      <label>是否公開：</label>
+      <select>
+        <option value=""></option>
+        <option value="true">公開</option>
+        <option value="false">非公開</option>
+      </select>
+
+      <br/>
+
+      <section style="border: 1px solid blue; padding: 1rem">
+        <label>開始時間 </label><input type="datetime-local"/><br/>
+        <label>結束時間 </label><input type="datetime-local"/>
+      </section>
+      <br/>
+      <button type="button" class="btn btn-outline-info">查詢</button>
+    </div>
+
+    <br/>
+
     <div style="border: 1px solid black; padding: 1rem;">
       <label>title: </label><input type="text" v-model="p_title" /><br/>
       <label>published: </label><input type="text" v-model="p_published" /><br/>
@@ -33,7 +68,7 @@
           <td>{{ item.end_time }}</td>
           <td>{{ item.followerCount }}</td>
           <td style="text-align: center;">
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-danger" @click.prevent="deleteBulletin(item.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -88,6 +123,20 @@
    */
   const genBulletinId = () => {
     return uuidv4().split('-')[0];
+  }
+
+
+  /**
+   * 刪除公告
+   */
+  const deleteBulletin = (_id) => {
+    console.log(`刪除 id: ${_id}`)
+    let targetIndex = bulletinMsgs.value.map(e => e.id).indexOf(_id)
+    console.log('>>> targetIndex = ', targetIndex);
+    
+    console.log(">>> targer item to delete: ", bulletinMsgs.value[targetIndex])
+    let delItem = bulletinMsgs.value.splice(targetIndex, 1)
+    console.log(">>> delItem = ", delItem);
   }
 
   // watchEffect(() => {
