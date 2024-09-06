@@ -2,46 +2,72 @@
   <div>
     <h1 style="color: blue;">Bulletin.vue</h1>
     
-    <div style="border: 1px solid darkblue; padding: 1rem;">
-      <label>公告標題：</label>
-      <input type="text"/>
+    <fieldset class="border border-dark p-3">
+      <legend class="w-auto px-2">查詢區塊</legend>
+      <div class="row">
+        <div class="col-4">
+          <label for="bTitle" class="d-inline">公告標題：</label>
+          <input type="text" class="form-control d-inline w-auto" id="bTitle"/>
+          
+          <br/><br/>
+          
+          <label class="d-inline">公告種類：</label>
+          <select class="form-control d-inline w-auto">
+            <option value="0"></option>
+            <option value="1">最新公告</option>
+            <option value="2">FAQ</option>
+            <option value="3">操作手冊</option>
+          </select>
 
-      <br/>
+          <br/><br/>
 
-      <label>公告種類：</label>
-      <select>
-        <option value="0"></option>
-        <option value="1">最新公告</option>
-        <option value="2">FAQ</option>
-        <option value="3">操作手冊</option>
-      </select>
+          <label class="d-inline">是否公開：</label>
+          <select class="form-control d-inline w-auto">
+            <option value=""></option>
+            <option value="true">公開</option>
+            <option value="false">非公開</option>
+          </select>
 
-      <br/>
-
-      <label>是否公開：</label>
-      <select>
-        <option value=""></option>
-        <option value="true">公開</option>
-        <option value="false">非公開</option>
-      </select>
-
-      <br/>
-
-      <section style="border: 1px solid blue; padding: 1rem">
-        <label>開始時間 </label><input type="datetime-local"/><br/>
-        <label>結束時間 </label><input type="datetime-local"/>
-      </section>
-      <br/>
-      <button type="button" class="btn btn-outline-info">查詢</button>
-    </div>
+        </div>
+        <div class="col-5">
+          
+          <div class="row mb-3">
+            <label for="start-time" class="col-sm-2 col-form-label">開始時間：</label>
+            <div class="col-sm-4">
+              <input type="datetime-local" class="form-control" id="start-time">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="end-time" class="col-sm-2 col-form-label">結束時間：</label>
+            <div class="col-sm-4">
+              <input type="datetime-local" class="form-control" id="end-time">
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline-info">查詢</button>
+        </div>
+        <div class="col">
+          <!-- section3 -->
+        </div>
+      </div>
+    </fieldset>
 
     <br/>
 
-    <div style="border: 1px solid black; padding: 1rem;">
-      <label>title: </label><input type="text" v-model="p_title" /><br/>
-      <label>published: </label><input type="text" v-model="p_published" /><br/>
+    <fieldset class="border border-dark p-3">
+      <legend class="w-auto px-2">新增區塊</legend>
+
+      <label class="d-inline">公告標題：</label>
+      <input type="text" class="form-control d-inline w-auto" v-model="p_title" />
+      
+      <br/><br/>
+
+      <label class="d-inline">是否公開：</label>
+      <input type="text" class="form-control d-inline w-auto" v-model="p_published" />
+
+      <br/><br/>
       <button type="button" class="btn btn-outline-success" @click="(e) => doAddBulletin(e)">新增</button>
-    </div>
+    </fieldset>
+      
 
     <br/>
     
@@ -146,5 +172,10 @@
 </script>
 
 <style lang="css" scoped>
-
+  input {
+    border: 1px solid #1a1313;
+  }
+  select {
+    border: 1px solid #1a1313;
+  }
 </style>
