@@ -43,7 +43,7 @@
               <input type="date" class="form-control" id="end-time" v-model="q_endTime">
             </div>
           </div>
-          <p>(查詢 end_time 在「基準日」以後的資料)</p>
+          <p>(查詢 endTime 在「基準日」以後的資料)</p>
           <button type="button" class="btn btn-outline-info" @click.prevent="doQueryBulletinMsgs">查詢</button>
         </div>
         <div class="col">
@@ -66,6 +66,15 @@
       <input type="text" class="form-control d-inline w-auto" v-model="p_published" />
 
       <br/><br/>
+
+      <label class="d-inline">公告種類：</label>
+      <select class="form-control d-inline w-auto" v-model="p_type">
+        <option value="1">最新公告</option>
+        <option value="2">FAQ</option>
+        <option value="3">操作手冊</option>
+      </select>
+
+      <br/><br/>
       <button type="button" class="btn btn-outline-success" @click="(e) => doAddBulletin(e)">新增</button>
     </fieldset>
       
@@ -79,8 +88,8 @@
           <th scope="col">title</th>
           <th scope="col">type</th>
           <th scope="col">published</th>
-          <th scope="col">start_time</th>
-          <th scope="col">end_time</th>
+          <th scope="col">startTime</th>
+          <th scope="col">endTime</th>
           <th scope="col">followerCount</th>
           <th scope="col">action</th>
         </tr>
@@ -92,8 +101,8 @@
           <td>{{ item.title }}</td>
           <td>{{ mapBulletinType(item.type) }}</td>
           <td>{{ item.published ? '公開':'非公開' }}</td>
-          <td>{{ item.start_time }}</td>
-          <td>{{ item.end_time }}</td>
+          <td>{{ item.startTime }}</td>
+          <td>{{ item.endTime }}</td>
           <td>{{ item.followerCount }}</td>
           <td style="text-align: center;">
             <button type="button" class="btn btn-danger" @click.prevent="deleteBulletin(item.id)">Delete</button>
@@ -115,8 +124,8 @@
       title: 'Vue3 精選',
       type: 1, // 1: 最新公告, 2: FAQ, 3: 操作手冊
       published: true,
-      start_time: '2024-10-01 00:00:00',
-      end_time: '2024-10-31 23:59:59',
+      startTime: '2024-10-01 00:00:00',
+      endTime: '2024-10-31 23:59:59',
       followerCount: 87
     }, 
     {
@@ -124,8 +133,8 @@
       title: '馬克與瑪麗',
       type: 2,
       published: true,
-      start_time: '2022-07-07 13:58:00',
-      end_time: '2024-02-12 15:45:23',
+      startTime: '2022-07-07 13:58:00',
+      endTime: '2024-02-12 15:45:23',
       followerCount: 1943
     }, 
     {
@@ -133,8 +142,8 @@
       title: 'SpringBoot 聖經',
       type: 3, // 1: 最新公告, 2: FAQ, 3: 操作手冊
       published: false,
-      start_time: '2024-05-01 00:00:00',
-      end_time: '2024-07-31 23:59:59',
+      startTime: '2024-05-01 00:00:00',
+      endTime: '2024-07-31 23:59:59',
       followerCount: 103
     }
   ])
@@ -145,6 +154,7 @@
 
   const p_title = ref('Angular全家桶');
   const p_published = ref('非公開');
+  const p_type = ref('1');
 
   // 查詢相關參數
   const q_title = ref('');
@@ -160,12 +170,14 @@
     bulletinMsgs.value.push({
       id: genBulletinId(),
       title: p_title.value,
+      type: parseInt(p_type.value),
       published: p_published.value === '公開' ? true : false,
-      start_time: new Date().toISOString().slice(0, 19).replace('T', ' '),
-      end_time: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' '),
+      startTime: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      endTime: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' '),
       followerCount: 0
     })
   }
+
 
   /**
    * 產生公告id
@@ -217,8 +229,8 @@
         isMatch = isMatch && item.published === (q_published.value === 'true');
       }
       if (q_endTime.value !== '') {
-        // 判斷 item.end_time 是否在 q_endTime 之後
-        isMatch = isMatch && new Date(item.end_time) > new Date(q_endTime.value);
+        // 判斷 item.endTime 是否在 q_endTime 之後
+        isMatch = isMatch && new Date(item.endTime) > new Date(q_endTime.value);
       }
       return isMatch;
     });
