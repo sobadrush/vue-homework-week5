@@ -27,3 +27,5 @@ npm run dev
 ```sh
 npm run build
 ```
+
+![pic1](https://github.com/sobadrush/vue-homework-week5/blob/feature/BulletinMsg/images/pic1.png?raw=true)
