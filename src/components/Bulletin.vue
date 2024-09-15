@@ -191,6 +191,10 @@
    * 刪除公告
    */
   const deleteBulletin = (_id) => {
+    if(!confirm('確定要刪除嗎？')) {
+      return;
+    }
+
     console.log(`刪除 id: ${_id}`)
     let targetIndex = bulletinMsgs.value.map(e => e.id).indexOf(_id)
     console.log('>>> targetIndex = ', targetIndex);
